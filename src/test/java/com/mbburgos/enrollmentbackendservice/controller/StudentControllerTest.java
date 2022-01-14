@@ -1,6 +1,7 @@
 package com.mbburgos.enrollmentbackendservice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mbburgos.enrollmentbackendservice.generator.StudentGenerator;
 import com.mbburgos.enrollmentbackendservice.model.Student;
 import com.mbburgos.enrollmentbackendservice.service.StudentService;
 import org.junit.jupiter.api.Test;
@@ -32,13 +33,11 @@ public class StudentControllerTest {
 
     @Test
     void shouldReturnStudentProfile() throws Exception {
-        var id = randomAlphabeticString();
-        var student = new Student(id, randomAlphabeticString(), randomAlphabeticString(),
-                randomAlphabeticString(), randomAlphabeticString());
+        var student = StudentGenerator.generateStudentModel();
 
         when(studentService.retrieveStudent(any())).thenReturn(student);
 
-        mvc.perform(get("/enrollment/student/" + id).contextPath("/enrollment"))
+        mvc.perform(get("/enrollment/student/" + student.studentId()).contextPath("/enrollment"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(objectMapper.writeValueAsString(student)));

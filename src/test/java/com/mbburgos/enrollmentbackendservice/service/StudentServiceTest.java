@@ -1,6 +1,7 @@
 package com.mbburgos.enrollmentbackendservice.service;
 
 import com.mbburgos.enrollmentbackendservice.entity.StudentEntity;
+import com.mbburgos.enrollmentbackendservice.generator.StudentGenerator;
 import com.mbburgos.enrollmentbackendservice.repository.StudentRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +27,7 @@ public class StudentServiceTest {
 
     @Test
     void shouldReturnStudentModel() {
-        var studentEntity = StudentEntity.builder()
-                .studentId(randomAlphabeticString())
-                .firstName(randomAlphabeticString())
-                .middleName(randomAlphabeticString())
-                .lastName(randomAlphabeticString())
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .profileImage(randomAlphabeticString())
-                .build();
+        var studentEntity = StudentGenerator.generateStudentEntity();
 
         when(studentRepository.findById(any())).thenReturn(Optional.of(studentEntity));
 
