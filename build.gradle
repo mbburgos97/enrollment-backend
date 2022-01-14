@@ -12,9 +12,22 @@ repositories {
 	mavenCentral()
 }
 
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation group: 'org.postgresql', name: 'postgresql', version: '42.3.1'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.22'
+	compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.22'
+
+	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation group: 'com.tyro.oss', name: 'random-data', version: '1.0.0'
+	testImplementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.1'
+	testRuntimeOnly 'com.h2database:h2'
 }
 
 test {

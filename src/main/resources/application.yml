@@ -1,0 +1,13 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /enrollment
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/enrollment
+    username: enrollment_user
+    password: tempPass123
+  jpa:
+    hibernate:
+      show-sql: true
