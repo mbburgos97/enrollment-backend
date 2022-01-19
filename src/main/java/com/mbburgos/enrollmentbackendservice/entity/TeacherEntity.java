@@ -18,5 +18,9 @@ public class TeacherEntity {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String profileImage;
-
+    private String username;
+    private String encryptedPassword;
+    private String email;
+    private String contactNumber;
+    private String nickname;
 }

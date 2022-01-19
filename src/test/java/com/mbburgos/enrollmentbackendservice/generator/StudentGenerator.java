@@ -18,11 +18,17 @@ public abstract class StudentGenerator {
                 .middleName(randomAlphabeticString())
                 .updatedAt(LocalDateTime.now())
                 .createdAt(LocalDateTime.now())
+                .username(randomAlphabeticString())
+                .encryptedPassword(randomAlphabeticString())
+                .contactNumber(randomAlphabeticString())
+                .nickname(randomAlphabeticString())
+                .email(randomAlphabeticString())
                 .build();
     }
 
     public static Student generateStudentModel() {
         return new Student(randomAlphabeticString(), randomAlphabeticString(), randomAlphabeticString(),
+                randomAlphabeticString(), randomAlphabeticString(), randomAlphabeticString(), randomAlphabeticString(),
                 randomAlphabeticString(), randomAlphabeticString());
     }
 }
