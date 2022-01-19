@@ -41,5 +41,4 @@ public class StudentServiceTest {
         assertThat(student.contactNumber()).isEqualTo(studentEntity.getContactNumber());
         assertThat(student.nickname()).isEqualTo(studentEntity.getNickname());
     }
-
 }
