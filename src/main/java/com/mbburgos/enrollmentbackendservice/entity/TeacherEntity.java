@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
@@ -25,6 +26,7 @@ public class TeacherEntity {
     private LocalDateTime updatedAt;
     private String profileImage;
     private String username;
+    @Column(name = "password")
     private String encryptedPassword;
     private String email;
     private String contactNumber;
