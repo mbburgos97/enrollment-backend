@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,15 +31,22 @@ public class StudentServiceTest {
 
         var student = studentService.retrieveStudent(studentEntity.getStudentId());
 
-        assertThat(student.studentId()).isEqualTo(studentEntity.getStudentId());
-        assertThat(student.firstName()).isEqualTo(studentEntity.getFirstName());
-        assertThat(student.middleName()).isEqualTo(studentEntity.getMiddleName());
-        assertThat(student.lastName()).isEqualTo(studentEntity.getLastName());
-        assertThat(student.profileImage()).isEqualTo(studentEntity.getProfileImage());
+        assertThat(student).usingRecursiveComparison().isEqualTo(studentEntity);
+    }
 
-        assertThat(student.username()).isEqualTo(studentEntity.getUsername());
-        assertThat(student.email()).isEqualTo(studentEntity.getEmail());
-        assertThat(student.contactNumber()).isEqualTo(studentEntity.getContactNumber());
-        assertThat(student.nickname()).isEqualTo(studentEntity.getNickname());
+    @Test
+    void shouldReturnAllStudentModels() {
+        var studentEntities = Arrays.asList(StudentGenerator.generateStudentEntity(),
+                StudentGenerator.generateStudentEntity(),
+                StudentGenerator.generateStudentEntity());
+
+        when(studentRepository.findAll()).thenReturn(studentEntities);
+
+        var students = studentService.retrieveAllStudents();
+
+        students.forEach(student -> assertThat(student).usingRecursiveComparison()
+                .isEqualTo(studentEntities.stream()
+                        .filter(entity -> entity.getStudentId().equals(student.studentId()))
+                        .findFirst().get()));
     }
 }
