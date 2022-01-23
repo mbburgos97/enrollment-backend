@@ -42,6 +42,5 @@ public class StudentRepositoryTest {
                 .isEqualTo(entities.stream()
                         .filter(entity -> entity.getStudentId().equals(retrieveEntity.getStudentId()))
                         .findFirst().get()));
-
     }
 }

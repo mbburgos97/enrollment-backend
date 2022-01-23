@@ -1,9 +1,7 @@
 package com.mbburgos.enrollmentbackendservice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mbburgos.enrollmentbackendservice.generator.StudentGenerator;
 import com.mbburgos.enrollmentbackendservice.generator.TeacherGenerator;
-import com.mbburgos.enrollmentbackendservice.service.StudentService;
 import com.mbburgos.enrollmentbackendservice.service.TeacherService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.Arrays;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -41,5 +41,19 @@ public class TeacherControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(objectMapper.writeValueAsString(teacher)));
+    }
+
+    @Test
+    void shouldReturnAllTeacherProfiles() throws Exception {
+        var teachers = Arrays.asList(TeacherGenerator.generateTeacherModel(),
+                TeacherGenerator.generateTeacherModel(),
+                TeacherGenerator.generateTeacherModel());
+
+        when(teacherService.retrieveAllTeachers()).thenReturn(teachers);
+
+        mvc.perform(get("/enrollment/teachers").contextPath("/enrollment"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(objectMapper.writeValueAsString(teachers)));
     }
 }

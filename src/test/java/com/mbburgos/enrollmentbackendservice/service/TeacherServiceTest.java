@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,15 +31,22 @@ public class TeacherServiceTest {
 
         var teacher = teacherService.retrieveTeacher(teacherEntity.getTeacherId());
 
-        assertThat(teacher.teacherId()).isEqualTo(teacherEntity.getTeacherId());
-        assertThat(teacher.firstName()).isEqualTo(teacherEntity.getFirstName());
-        assertThat(teacher.middleName()).isEqualTo(teacherEntity.getMiddleName());
-        assertThat(teacher.lastName()).isEqualTo(teacherEntity.getLastName());
-        assertThat(teacher.profileImage()).isEqualTo(teacherEntity.getProfileImage());
+        assertThat(teacher).usingRecursiveComparison().isEqualTo(teacherEntity);
+    }
 
-        assertThat(teacher.username()).isEqualTo(teacherEntity.getUsername());
-        assertThat(teacher.email()).isEqualTo(teacherEntity.getEmail());
-        assertThat(teacher.contactNumber()).isEqualTo(teacherEntity.getContactNumber());
-        assertThat(teacher.nickname()).isEqualTo(teacherEntity.getNickname());
+    @Test
+    void shouldReturnAllTeacherModels() {
+        var teacherEntities = Arrays.asList(TeacherGenerator.generateTeacherEntity(),
+                TeacherGenerator.generateTeacherEntity(),
+                TeacherGenerator.generateTeacherEntity());
+
+        when(teacherRepository.findAll()).thenReturn(teacherEntities);
+
+        var teachers = teacherService.retrieveAllTeachers();
+
+        teachers.forEach(teacher -> assertThat(teacher).usingRecursiveComparison()
+                .isEqualTo(teacherEntities.stream()
+                        .filter(entity -> entity.getTeacherId().equals(teacher.teacherId()))
+                        .findFirst().get()));
     }
 }

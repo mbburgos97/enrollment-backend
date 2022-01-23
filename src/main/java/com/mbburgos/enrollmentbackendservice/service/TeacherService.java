@@ -7,6 +7,9 @@ import com.mbburgos.enrollmentbackendservice.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.StreamSupport;
+
 @Service
 @RequiredArgsConstructor
 public class TeacherService {
@@ -16,5 +19,11 @@ public class TeacherService {
     public Teacher retrieveTeacher(String teacherId) {
         return TeacherMapper.INSTANCE.toModel(teacherRepository.findById(teacherId)
                 .orElseThrow(() -> new EntityNotFoundException("Teacher with id " + teacherId + " not found.")));
+    }
+
+    public List<Teacher> retrieveAllTeachers() {
+        return StreamSupport.stream(teacherRepository.findAll().spliterator(), false)
+                .map(TeacherMapper.INSTANCE::toModel)
+                .toList();
     }
 }
