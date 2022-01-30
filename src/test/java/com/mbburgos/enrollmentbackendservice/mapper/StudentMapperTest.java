@@ -15,7 +15,7 @@ public class StudentMapperTest {
 
         var student = StudentMapper.INSTANCE.toModel(studentEntity);
 
-        assertThat(student.studentId()).isEqualTo(studentEntity.getStudentId());
+        assertThat(student.id()).isEqualTo(studentEntity.getStudentId());
         assertThat(student.firstName()).isEqualTo(studentEntity.getFirstName());
         assertThat(student.middleName()).isEqualTo(studentEntity.getMiddleName());
         assertThat(student.lastName()).isEqualTo(studentEntity.getLastName());

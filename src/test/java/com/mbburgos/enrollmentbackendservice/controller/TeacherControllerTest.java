@@ -37,7 +37,7 @@ public class TeacherControllerTest {
 
         when(teacherService.retrieveTeacher(any())).thenReturn(teacher);
 
-        mvc.perform(get("/enrollment/teacher/" + teacher.teacherId()).contextPath("/enrollment"))
+        mvc.perform(get("/enrollment/teacher/" + teacher.id()).contextPath("/enrollment"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(objectMapper.writeValueAsString(teacher)));

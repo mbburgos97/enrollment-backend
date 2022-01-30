@@ -26,4 +26,9 @@ public class StudentService {
                 .map(StudentMapper.INSTANCE::toModel)
                 .toList();
     }
+
+    public Student createStudent(Student student) {
+        return StudentMapper.INSTANCE.toModel(
+                studentRepository.save(StudentMapper.INSTANCE.toEntity(student)));
+    }
 }

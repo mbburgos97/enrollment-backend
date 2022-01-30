@@ -31,7 +31,8 @@ public class StudentServiceTest {
 
         var student = studentService.retrieveStudent(studentEntity.getStudentId());
 
-        assertThat(student).usingRecursiveComparison().isEqualTo(studentEntity);
+        assertThat(student.id()).isEqualTo(studentEntity.getStudentId());
+        assertThat(student).usingRecursiveComparison().ignoringFields("id").isEqualTo(studentEntity);
     }
 
     @Test
@@ -45,8 +46,9 @@ public class StudentServiceTest {
         var students = studentService.retrieveAllStudents();
 
         students.forEach(student -> assertThat(student).usingRecursiveComparison()
+                .ignoringFields("id")
                 .isEqualTo(studentEntities.stream()
-                        .filter(entity -> entity.getStudentId().equals(student.studentId()))
+                        .filter(entity -> entity.getStudentId().equals(student.id()))
                         .findFirst().get()));
     }
 }

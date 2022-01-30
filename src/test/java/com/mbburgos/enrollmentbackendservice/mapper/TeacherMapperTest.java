@@ -1,6 +1,5 @@
 package com.mbburgos.enrollmentbackendservice.mapper;
 
-import com.mbburgos.enrollmentbackendservice.generator.StudentGenerator;
 import com.mbburgos.enrollmentbackendservice.generator.TeacherGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,7 +15,7 @@ public class TeacherMapperTest {
 
         var teacher = TeacherMapper.INSTANCE.toModel(teacherEntity);
 
-        assertThat(teacher.teacherId()).isEqualTo(teacherEntity.getTeacherId());
+        assertThat(teacher.id()).isEqualTo(teacherEntity.getTeacherId());
         assertThat(teacher.firstName()).isEqualTo(teacherEntity.getFirstName());
         assertThat(teacher.middleName()).isEqualTo(teacherEntity.getMiddleName());
         assertThat(teacher.lastName()).isEqualTo(teacherEntity.getLastName());

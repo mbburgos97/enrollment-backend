@@ -1,6 +1,7 @@
 package com.mbburgos.enrollmentbackendservice.repository;
 
 import com.mbburgos.enrollmentbackendservice.generator.StudentGenerator;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -16,6 +17,11 @@ public class StudentRepositoryTest {
 
     @Autowired
     private StudentRepository studentRepository;
+
+    @BeforeEach
+    public void setup() {
+        studentRepository.deleteAll();
+    }
 
     @Test
     void shouldReturnStudentEntity() {
