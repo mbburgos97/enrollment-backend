@@ -22,8 +22,10 @@ public class TeacherEntity {
     private String firstName;
     private String middleName;
     private String lastName;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    @Builder.Default
+    private LocalDateTime createdAt = LocalDateTime.now();
+    @Builder.Default
+    private LocalDateTime updatedAt = LocalDateTime.now();
     private String profileImage;
     private String username;
     @Column(name = "password")

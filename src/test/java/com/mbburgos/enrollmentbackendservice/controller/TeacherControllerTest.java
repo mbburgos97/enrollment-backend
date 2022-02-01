@@ -16,6 +16,7 @@ import java.util.Arrays;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -55,5 +56,17 @@ public class TeacherControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(objectMapper.writeValueAsString(teachers)));
+    }
+
+    @Test
+    void shouldCreateTeacherProfile() throws Exception {
+        var teacher = TeacherGenerator.generateTeacherModel();
+
+        when(teacherService.createTeacher(any())).thenReturn(teacher);
+
+        mvc.perform(post("/enrollment/teacher/").contextPath("/enrollment").content(objectMapper.writeValueAsString(teacher)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(objectMapper.writeValueAsString(teacher)));
     }
 }

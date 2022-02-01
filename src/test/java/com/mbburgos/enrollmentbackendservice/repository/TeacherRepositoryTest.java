@@ -1,5 +1,6 @@
 package com.mbburgos.enrollmentbackendservice.repository;
 
+import com.mbburgos.enrollmentbackendservice.generator.StudentGenerator;
 import com.mbburgos.enrollmentbackendservice.generator.TeacherGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,6 +33,17 @@ public class TeacherRepositoryTest {
         var retrieveEntity = teacherRepository.findById(entity.getTeacherId()).get();
 
         assertThat(retrieveEntity).usingRecursiveComparison().isEqualTo(retrieveEntity);
+    }
+
+    @Test
+    void shouldCreateTeacherEntity() {
+        var entity = TeacherGenerator.generateTeacherEntity();
+
+        var savedEntity = teacherRepository.save(entity);
+
+        var retrieveEntity = teacherRepository.findById(entity.getTeacherId()).get();
+
+        assertThat(savedEntity).usingRecursiveComparison().isEqualTo(retrieveEntity);
     }
 
     @Test

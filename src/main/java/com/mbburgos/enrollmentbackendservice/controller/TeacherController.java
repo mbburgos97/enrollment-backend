@@ -1,15 +1,16 @@
 package com.mbburgos.enrollmentbackendservice.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mbburgos.enrollmentbackendservice.model.Teacher;
 import com.mbburgos.enrollmentbackendservice.service.TeacherService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
-public record TeacherController(TeacherService teacherService) {
+public record TeacherController(TeacherService teacherService, ObjectMapper mapper) {
 
     @GetMapping("/teacher/{id}")
     public Teacher retrieveTeacherProfile(@PathVariable("id") String teacherId) {
@@ -19,5 +20,10 @@ public record TeacherController(TeacherService teacherService) {
     @GetMapping("/teachers")
     public List<Teacher> retrieveAllTeachers() {
         return teacherService.retrieveAllTeachers();
+    }
+
+    @PostMapping("/teacher")
+    public Teacher createStudent(@RequestParam Map<String, Object> parameters) throws JsonProcessingException {
+        return teacherService.createTeacher(mapper.readValue(mapper.writeValueAsString(parameters), Teacher.class));
     }
 }

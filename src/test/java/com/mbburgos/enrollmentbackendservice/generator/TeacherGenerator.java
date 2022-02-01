@@ -28,6 +28,6 @@ public abstract class TeacherGenerator {
     public static Teacher generateTeacherModel() {
         return new Teacher(randomAlphabeticString(), randomAlphabeticString(), randomAlphabeticString(),
                 randomAlphabeticString(), randomAlphabeticString(), randomAlphabeticString(), randomAlphabeticString(),
-                randomAlphabeticString(), randomAlphabeticString());
+                randomAlphabeticString(), randomAlphabeticString(), randomAlphabeticString());
     }
 }

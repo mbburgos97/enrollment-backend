@@ -1,5 +1,9 @@
 package com.mbburgos.enrollmentbackendservice.model;
 
-public record Teacher(String id, String firstName, String middleName, String lastName, String profileImage,
-                      String username, String email, String contactNumber, String nickname) {
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public record Teacher(String id, @JsonProperty("first_name") String firstName, @JsonProperty("middle_name") String middleName,
+                      @JsonProperty("last_name") String lastName, @JsonProperty("profile_image") String profileImage,
+                      String username, String email, @JsonProperty("contact_number") String contactNumber, String nickname,
+                      String password) {
 }

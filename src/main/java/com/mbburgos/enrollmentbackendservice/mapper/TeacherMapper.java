@@ -11,5 +11,12 @@ public interface TeacherMapper {
     TeacherMapper INSTANCE = Mappers.getMapper(TeacherMapper.class);
 
     @Mapping(source = "teacherId", target = "id")
+    @Mapping(source = "encryptedPassword", target = "password")
     Teacher toModel(TeacherEntity teacherEntity);
+
+    @Mapping(source = "id", target = "teacherId")
+    @Mapping(source = "password", target = "encryptedPassword")
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    TeacherEntity toEntity(Teacher teacher);
 }
