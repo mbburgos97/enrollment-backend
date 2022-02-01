@@ -16,14 +16,7 @@ public class StudentMapperTest {
         var student = StudentMapper.INSTANCE.toModel(studentEntity);
 
         assertThat(student.id()).isEqualTo(studentEntity.getStudentId());
-        assertThat(student.firstName()).isEqualTo(studentEntity.getFirstName());
-        assertThat(student.middleName()).isEqualTo(studentEntity.getMiddleName());
-        assertThat(student.lastName()).isEqualTo(studentEntity.getLastName());
-        assertThat(student.profileImage()).isEqualTo(studentEntity.getProfileImage());
-
-        assertThat(student.username()).isEqualTo(studentEntity.getUsername());
-        assertThat(student.email()).isEqualTo(studentEntity.getEmail());
-        assertThat(student.contactNumber()).isEqualTo(studentEntity.getContactNumber());
-        assertThat(student.nickname()).isEqualTo(studentEntity.getNickname());
+        assertThat(student.password()).isEqualTo(studentEntity.getEncryptedPassword());
+        assertThat(student).usingRecursiveComparison().ignoringFields("id", "password").isEqualTo(studentEntity);
     }
 }

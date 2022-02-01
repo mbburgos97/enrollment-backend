@@ -16,14 +16,6 @@ public class TeacherMapperTest {
         var teacher = TeacherMapper.INSTANCE.toModel(teacherEntity);
 
         assertThat(teacher.id()).isEqualTo(teacherEntity.getTeacherId());
-        assertThat(teacher.firstName()).isEqualTo(teacherEntity.getFirstName());
-        assertThat(teacher.middleName()).isEqualTo(teacherEntity.getMiddleName());
-        assertThat(teacher.lastName()).isEqualTo(teacherEntity.getLastName());
-        assertThat(teacher.profileImage()).isEqualTo(teacherEntity.getProfileImage());
-
-        assertThat(teacher.username()).isEqualTo(teacherEntity.getUsername());
-        assertThat(teacher.email()).isEqualTo(teacherEntity.getEmail());
-        assertThat(teacher.contactNumber()).isEqualTo(teacherEntity.getContactNumber());
-        assertThat(teacher.nickname()).isEqualTo(teacherEntity.getNickname());
+        assertThat(teacher).usingRecursiveComparison().ignoringFields("id").isEqualTo(teacherEntity);
     }
 }
