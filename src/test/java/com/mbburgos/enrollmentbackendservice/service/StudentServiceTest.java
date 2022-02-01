@@ -1,12 +1,16 @@
 package com.mbburgos.enrollmentbackendservice.service;
 
+import com.mbburgos.enrollmentbackendservice.entity.StudentEntity;
 import com.mbburgos.enrollmentbackendservice.generator.StudentGenerator;
+import com.mbburgos.enrollmentbackendservice.mapper.StudentMapper;
 import com.mbburgos.enrollmentbackendservice.repository.StudentRepository;
+import org.apache.tomcat.jni.Local;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -32,7 +36,8 @@ public class StudentServiceTest {
         var student = studentService.retrieveStudent(studentEntity.getStudentId());
 
         assertThat(student.id()).isEqualTo(studentEntity.getStudentId());
-        assertThat(student).usingRecursiveComparison().ignoringFields("id").isEqualTo(studentEntity);
+        assertThat(student.password()).isEqualTo(studentEntity.getEncryptedPassword());
+        assertThat(student).usingRecursiveComparison().ignoringFields("id", "password").isEqualTo(studentEntity);
     }
 
     @Test
@@ -46,9 +51,36 @@ public class StudentServiceTest {
         var students = studentService.retrieveAllStudents();
 
         students.forEach(student -> assertThat(student).usingRecursiveComparison()
-                .ignoringFields("id")
+                .ignoringFields("id", "password")
                 .isEqualTo(studentEntities.stream()
                         .filter(entity -> entity.getStudentId().equals(student.id()))
                         .findFirst().get()));
+    }
+
+    @Test
+    void shouldCreateStudentModel() {
+        var studentModel = StudentGenerator.generateStudentModel();
+        var studentEntity = StudentEntity.builder()
+                .studentId(studentModel.id())
+                .nickname(studentModel.nickname())
+                .email(studentModel.email())
+                .contactNumber(studentModel.contactNumber())
+                .encryptedPassword(studentModel.password())
+                .username(studentModel.username())
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .middleName(studentModel.middleName())
+                .firstName(studentModel.firstName())
+                .lastName(studentModel.lastName())
+                .profileImage(studentModel.profileImage())
+                .build();
+
+        when(studentRepository.save(any())).thenReturn(studentEntity);
+
+        var student = studentService.createStudent(studentModel);
+
+        assertThat(student.id()).isEqualTo(studentEntity.getStudentId());
+        assertThat(student.password()).isEqualTo(studentEntity.getEncryptedPassword());
+        assertThat(student).usingRecursiveComparison().ignoringFields("id", "password").isEqualTo(studentEntity);
     }
 }

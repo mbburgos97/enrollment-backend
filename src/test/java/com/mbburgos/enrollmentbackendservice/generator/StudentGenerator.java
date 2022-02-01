@@ -29,6 +29,6 @@ public abstract class StudentGenerator {
     public static Student generateStudentModel() {
         return new Student(randomAlphabeticString(), randomAlphabeticString(), randomAlphabeticString(),
                 randomAlphabeticString(), randomAlphabeticString(), randomAlphabeticString(), randomAlphabeticString(),
-                randomAlphabeticString(), randomAlphabeticString());
+                randomAlphabeticString(), randomAlphabeticString(), randomAlphabeticString());
     }
 }

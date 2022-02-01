@@ -35,6 +35,17 @@ public class StudentRepositoryTest {
     }
 
     @Test
+    void shouldCreateStudentEntity() {
+        var entity = StudentGenerator.generateStudentEntity();
+
+        var savedEntity = studentRepository.save(entity);
+
+        var retrieveEntity = studentRepository.findById(entity.getStudentId()).get();
+
+        assertThat(savedEntity).usingRecursiveComparison().isEqualTo(retrieveEntity);
+    }
+
+    @Test
     void shouldReturnAllStudentEntities() {
         var entities = Arrays.asList(StudentGenerator.generateStudentEntity(),
                 StudentGenerator.generateStudentEntity(),
