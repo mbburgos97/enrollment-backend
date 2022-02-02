@@ -7,6 +7,12 @@ import com.mbburgos.enrollmentbackendservice.repository.SubjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static java.util.stream.Collectors.toList;
+
 @Service
 @RequiredArgsConstructor
 public class SubjectService {
@@ -16,5 +22,11 @@ public class SubjectService {
     public Subject retrieveSubject(Long subjectId) {
         return SubjectMapper.INSTANCE.toModel(subjectRepository.findById(subjectId)
                     .orElseThrow(() -> new EntityNotFoundException("Subject with " + subjectId + " is not found.")));
+    }
+
+    public List<Subject> retrieveAllSubjects() {
+        return StreamSupport.stream(subjectRepository.findAll().spliterator(), false)
+                .map(SubjectMapper.INSTANCE::toModel)
+                .toList();
     }
 }

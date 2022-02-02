@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -31,5 +33,21 @@ public class SubjectRepositoryTest {
         var retrieveEntity = subjectRepository.findById(entity.getSubjectId()).get();
 
         assertThat(retrieveEntity).usingRecursiveComparison().isEqualTo(entity);
+    }
+
+    @Test
+    void shouldReturnAllSubjectEntities() {
+        var entities = Arrays.asList(SubjectGenerator.generateSubjectEntity(),
+                SubjectGenerator.generateSubjectEntity(),
+                SubjectGenerator.generateSubjectEntity());
+
+        entities.forEach(entity -> subjectRepository.save(entity));
+
+        var retrieveEntities = subjectRepository.findAll();
+
+        retrieveEntities.forEach(retrieveEntity -> assertThat(retrieveEntity).usingRecursiveComparison()
+                .isEqualTo(entities.stream()
+                        .filter(entity -> entity.getSubjectId().equals(retrieveEntity.getSubjectId()))
+                        .findFirst().get()));
     }
 }

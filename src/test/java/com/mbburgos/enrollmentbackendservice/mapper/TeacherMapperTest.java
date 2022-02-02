@@ -16,7 +16,8 @@ public class TeacherMapperTest {
         var teacher = TeacherMapper.INSTANCE.toModel(teacherEntity);
 
         assertThat(teacher.id()).isEqualTo(teacherEntity.getTeacherId());
-        assertThat(teacher).usingRecursiveComparison().ignoringFields("id").isEqualTo(teacherEntity);
+        assertThat(teacher.password()).isEqualTo(teacherEntity.getEncryptedPassword());
+        assertThat(teacher).usingRecursiveComparison().ignoringFields("id", "password").isEqualTo(teacherEntity);
     }
 
     @Test
@@ -26,6 +27,7 @@ public class TeacherMapperTest {
         var teacherEntity = TeacherMapper.INSTANCE.toEntity(teacher);
 
         assertThat(teacher.id()).isEqualTo(teacherEntity.getTeacherId());
-        assertThat(teacher).usingRecursiveComparison().ignoringFields("id").isEqualTo(teacherEntity);
+        assertThat(teacher.password()).isEqualTo(teacherEntity.getEncryptedPassword());
+        assertThat(teacher).usingRecursiveComparison().ignoringFields("id", "password").isEqualTo(teacherEntity);
     }
 }
