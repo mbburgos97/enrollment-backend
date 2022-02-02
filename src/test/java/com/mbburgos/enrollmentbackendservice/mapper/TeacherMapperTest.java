@@ -18,4 +18,14 @@ public class TeacherMapperTest {
         assertThat(teacher.id()).isEqualTo(teacherEntity.getTeacherId());
         assertThat(teacher).usingRecursiveComparison().ignoringFields("id").isEqualTo(teacherEntity);
     }
+
+    @Test
+    void shouldConvertTeacherModelToEntity() {
+        var teacher = TeacherGenerator.generateTeacherModel();
+
+        var teacherEntity = TeacherMapper.INSTANCE.toEntity(teacher);
+
+        assertThat(teacher.id()).isEqualTo(teacherEntity.getTeacherId());
+        assertThat(teacher).usingRecursiveComparison().ignoringFields("id").isEqualTo(teacherEntity);
+    }
 }

@@ -2,9 +2,7 @@ package com.mbburgos.enrollmentbackendservice.service;
 
 import com.mbburgos.enrollmentbackendservice.entity.StudentEntity;
 import com.mbburgos.enrollmentbackendservice.generator.StudentGenerator;
-import com.mbburgos.enrollmentbackendservice.mapper.StudentMapper;
 import com.mbburgos.enrollmentbackendservice.repository.StudentRepository;
-import org.apache.tomcat.jni.Local;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

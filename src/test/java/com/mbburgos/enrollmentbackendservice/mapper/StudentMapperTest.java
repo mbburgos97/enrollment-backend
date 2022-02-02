@@ -19,4 +19,15 @@ public class StudentMapperTest {
         assertThat(student.password()).isEqualTo(studentEntity.getEncryptedPassword());
         assertThat(student).usingRecursiveComparison().ignoringFields("id", "password").isEqualTo(studentEntity);
     }
+
+    @Test
+    void shouldConvertStudentModelToEntity() {
+        var student = StudentGenerator.generateStudentModel();
+
+        var studentEntity = StudentMapper.INSTANCE.toEntity(student);
+
+        assertThat(student.id()).isEqualTo(studentEntity.getStudentId());
+        assertThat(student.password()).isEqualTo(studentEntity.getEncryptedPassword());
+        assertThat(student).usingRecursiveComparison().ignoringFields("id", "password").isEqualTo(studentEntity);
+    }
 }
