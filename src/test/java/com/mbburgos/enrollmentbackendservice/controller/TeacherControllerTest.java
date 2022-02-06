@@ -64,7 +64,9 @@ public class TeacherControllerTest {
 
         when(teacherService.createTeacher(any())).thenReturn(teacher);
 
-        mvc.perform(post("/enrollment/teacher/").contextPath("/enrollment").content(objectMapper.writeValueAsString(teacher)))
+        mvc.perform(post("/enrollment/teacher/").contextPath("/enrollment")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(teacher)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(objectMapper.writeValueAsString(teacher)));

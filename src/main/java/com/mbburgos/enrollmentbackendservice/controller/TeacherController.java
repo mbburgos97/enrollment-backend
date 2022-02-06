@@ -23,7 +23,7 @@ public record TeacherController(TeacherService teacherService, ObjectMapper mapp
     }
 
     @PostMapping("/teacher")
-    public Teacher createStudent(@RequestParam Map<String, Object> parameters) throws JsonProcessingException {
+    public Teacher createStudent(@RequestBody Map<String, Object> parameters) throws JsonProcessingException {
         return teacherService.createTeacher(mapper.readValue(mapper.writeValueAsString(parameters), Teacher.class));
     }
 }

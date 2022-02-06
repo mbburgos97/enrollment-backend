@@ -64,7 +64,9 @@ public class StudentControllerTest {
 
         when(studentService.createStudent(any())).thenReturn(student);
 
-        mvc.perform(post("/enrollment/student/").contextPath("/enrollment").content(objectMapper.writeValueAsString(student)))
+        mvc.perform(post("/enrollment/student/").contextPath("/enrollment")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(student)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(objectMapper.writeValueAsString(student)));

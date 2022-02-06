@@ -28,6 +28,7 @@ public class StudentService {
     }
 
     public Student createStudent(Student student) {
+        System.out.println(student);
         return StudentMapper.INSTANCE.toModel(
                 studentRepository.save(StudentMapper.INSTANCE.toEntity(student)));
     }
