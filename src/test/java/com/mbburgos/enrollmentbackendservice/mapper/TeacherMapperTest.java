@@ -1,5 +1,6 @@
 package com.mbburgos.enrollmentbackendservice.mapper;
 
+import com.mbburgos.enrollmentbackendservice.generator.StudentGenerator;
 import com.mbburgos.enrollmentbackendservice.generator.TeacherGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,5 +30,19 @@ public class TeacherMapperTest {
         assertThat(teacher.id()).isEqualTo(teacherEntity.getTeacherId());
         assertThat(teacher.password()).isEqualTo(teacherEntity.getEncryptedPassword());
         assertThat(teacher).usingRecursiveComparison().ignoringFields("id", "password").isEqualTo(teacherEntity);
+    }
+
+    @Test
+    void shouldPatchTeacherEntityAndModel() {
+        var teacher = TeacherGenerator.generateTeacherModel();
+        var teacherEntity = TeacherGenerator.generateTeacherEntity();
+
+        teacherEntity.setTeacherId(teacher.id());
+
+        var patchedStudentEntity = teacherEntity.update(teacher);
+
+        assertThat(teacher.id()).isEqualTo(patchedStudentEntity.getTeacherId());
+        assertThat(teacher.password()).isEqualTo(patchedStudentEntity.getEncryptedPassword());
+        assertThat(teacher).usingRecursiveComparison().ignoringFields("id", "password").isEqualTo(patchedStudentEntity);
     }
 }

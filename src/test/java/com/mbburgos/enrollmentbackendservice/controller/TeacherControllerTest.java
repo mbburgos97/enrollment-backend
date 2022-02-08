@@ -15,8 +15,7 @@ import java.util.Arrays;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -65,6 +64,20 @@ public class TeacherControllerTest {
         when(teacherService.createTeacher(any())).thenReturn(teacher);
 
         mvc.perform(post("/enrollment/teacher/").contextPath("/enrollment")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(teacher)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(objectMapper.writeValueAsString(teacher)));
+    }
+
+    @Test
+    void shouldPatchTeacherProfile() throws Exception {
+        var teacher = TeacherGenerator.generateTeacherModel();
+
+        when(teacherService.patchTeacher(any(), any())).thenReturn(teacher);
+
+        mvc.perform(patch("/enrollment/teacher/" + teacher.id()).contextPath("/enrollment")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(teacher)))
                 .andExpect(status().isOk())

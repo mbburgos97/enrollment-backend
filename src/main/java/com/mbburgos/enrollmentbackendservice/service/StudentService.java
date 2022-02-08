@@ -28,8 +28,14 @@ public class StudentService {
     }
 
     public Student createStudent(Student student) {
-        System.out.println(student);
         return StudentMapper.INSTANCE.toModel(
                 studentRepository.save(StudentMapper.INSTANCE.toEntity(student)));
+    }
+
+    public Student patchStudent(String id, Student student) {
+        var studentEntity = studentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Student with " + student.id() + " doesn't exists."));
+
+        return StudentMapper.INSTANCE.toModel(studentRepository.save(studentEntity.update(student)));
     }
 }

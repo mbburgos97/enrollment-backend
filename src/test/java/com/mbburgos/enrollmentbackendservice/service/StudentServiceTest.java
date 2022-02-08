@@ -58,20 +58,7 @@ public class StudentServiceTest {
     @Test
     void shouldCreateStudentModel() {
         var studentModel = StudentGenerator.generateStudentModel();
-        var studentEntity = StudentEntity.builder()
-                .studentId(studentModel.id())
-                .nickname(studentModel.nickname())
-                .email(studentModel.email())
-                .contactNumber(studentModel.contactNumber())
-                .encryptedPassword(studentModel.password())
-                .username(studentModel.username())
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .middleName(studentModel.middleName())
-                .firstName(studentModel.firstName())
-                .lastName(studentModel.lastName())
-                .profileImage(studentModel.profileImage())
-                .build();
+        var studentEntity = StudentGenerator.toEntity(studentModel);
 
         when(studentRepository.save(any())).thenReturn(studentEntity);
 
@@ -80,5 +67,20 @@ public class StudentServiceTest {
         assertThat(student.id()).isEqualTo(studentEntity.getStudentId());
         assertThat(student.password()).isEqualTo(studentEntity.getEncryptedPassword());
         assertThat(student).usingRecursiveComparison().ignoringFields("id", "password").isEqualTo(studentEntity);
+    }
+
+    @Test
+    void shouldPatchStudentModel() {
+        var studentModel = StudentGenerator.generateStudentModel();
+        var studentEntity = StudentGenerator.generateStudentEntity();
+        studentEntity.setStudentId(studentModel.id());
+
+        when(studentRepository.findById(any())).thenReturn(Optional.of(studentEntity));
+        when(studentRepository.save(any())).thenReturn(studentEntity.update(studentModel));
+
+        var student = studentService.patchStudent(studentModel.id(), studentModel);
+
+        assertThat(student.id()).isEqualTo(studentEntity.getStudentId());
+        assertThat(student).usingRecursiveComparison().isEqualTo(studentModel);
     }
 }

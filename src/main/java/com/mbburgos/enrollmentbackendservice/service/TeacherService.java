@@ -1,7 +1,9 @@
 package com.mbburgos.enrollmentbackendservice.service;
 
 import com.mbburgos.enrollmentbackendservice.exception.EntityNotFoundException;
+import com.mbburgos.enrollmentbackendservice.mapper.StudentMapper;
 import com.mbburgos.enrollmentbackendservice.mapper.TeacherMapper;
+import com.mbburgos.enrollmentbackendservice.model.Student;
 import com.mbburgos.enrollmentbackendservice.model.Teacher;
 import com.mbburgos.enrollmentbackendservice.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,5 +32,12 @@ public class TeacherService {
     public Teacher createTeacher(Teacher teacher) {
         return TeacherMapper.INSTANCE.toModel(
                 teacherRepository.save(TeacherMapper.INSTANCE.toEntity(teacher)));
+    }
+
+    public Teacher patchTeacher(String id, Teacher teacher) {
+        var teacherEntity = teacherRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Teacher with " + teacher.id() + " doesn't exists."));
+
+        return TeacherMapper.INSTANCE.toModel(teacherRepository.save(teacherEntity.update(teacher)));
     }
 }

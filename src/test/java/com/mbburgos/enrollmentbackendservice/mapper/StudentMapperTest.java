@@ -30,4 +30,18 @@ public class StudentMapperTest {
         assertThat(student.password()).isEqualTo(studentEntity.getEncryptedPassword());
         assertThat(student).usingRecursiveComparison().ignoringFields("id", "password").isEqualTo(studentEntity);
     }
+
+    @Test
+    void shouldPatchStudentEntityAndModel() {
+        var student = StudentGenerator.generateStudentModel();
+        var studentEntity = StudentGenerator.generateStudentEntity();
+
+        studentEntity.setStudentId(student.id());
+
+        var patchedStudentEntity = studentEntity.update(student);
+
+        assertThat(student.id()).isEqualTo(patchedStudentEntity.getStudentId());
+        assertThat(student.password()).isEqualTo(patchedStudentEntity.getEncryptedPassword());
+        assertThat(student).usingRecursiveComparison().ignoringFields("id", "password").isEqualTo(patchedStudentEntity);
+    }
 }

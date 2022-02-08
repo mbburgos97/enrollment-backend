@@ -1,6 +1,7 @@
 package com.mbburgos.enrollmentbackendservice.service;
 
 import com.mbburgos.enrollmentbackendservice.entity.TeacherEntity;
+import com.mbburgos.enrollmentbackendservice.generator.StudentGenerator;
 import com.mbburgos.enrollmentbackendservice.generator.TeacherGenerator;
 import com.mbburgos.enrollmentbackendservice.repository.TeacherRepository;
 import org.junit.jupiter.api.Test;
@@ -80,5 +81,20 @@ public class TeacherServiceTest {
         assertThat(teacher.id()).isEqualTo(teacherEntity.getTeacherId());
         assertThat(teacher.password()).isEqualTo(teacherEntity.getEncryptedPassword());
         assertThat(teacher).usingRecursiveComparison().ignoringFields("id", "password").isEqualTo(teacherEntity);
+    }
+
+    @Test
+    void shouldPatchTeacherModel() {
+        var teacherModel = TeacherGenerator.generateTeacherModel();
+        var teacherEntity = TeacherGenerator.generateTeacherEntity();
+        teacherEntity.setTeacherId(teacherModel.id());
+
+        when(teacherRepository.findById(any())).thenReturn(Optional.of(teacherEntity));
+        when(teacherRepository.save(any())).thenReturn(teacherEntity.update(teacherModel));
+
+        var teacher = teacherService.patchTeacher(teacherModel.id(), teacherModel);
+
+        assertThat(teacher.id()).isEqualTo(teacherEntity.getTeacherId());
+        assertThat(teacher).usingRecursiveComparison().isEqualTo(teacherModel);
     }
 }

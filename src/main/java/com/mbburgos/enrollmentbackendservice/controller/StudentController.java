@@ -27,4 +27,9 @@ public record StudentController(StudentService studentService, ObjectMapper mapp
     public Student createStudent(@RequestBody Map<String, Object> parameters) throws JsonProcessingException {
         return studentService.createStudent(mapper.readValue(mapper.writeValueAsString(parameters), Student.class));
     }
+
+    @PatchMapping(value = "/student/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Student patchStudent(@PathVariable("id") String id, @RequestBody Map<String, Object> parameters) throws JsonProcessingException {
+        return studentService.patchStudent(id, mapper.readValue(mapper.writeValueAsString(parameters), Student.class));
+    }
 }
