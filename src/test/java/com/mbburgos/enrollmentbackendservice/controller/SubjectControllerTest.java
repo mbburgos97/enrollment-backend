@@ -36,9 +36,9 @@ public class SubjectControllerTest {
     void shouldReturnSubject() throws Exception {
         var subject = SubjectGenerator.generateSubjectModel();
 
-        when(subjectService.retrieveSubject(subject.subjectId())).thenReturn(subject);
+        when(subjectService.retrieveSubject(subject.id())).thenReturn(subject);
 
-        mvc.perform(get("/enrollment/subject/" + subject.subjectId()).contextPath("/enrollment"))
+        mvc.perform(get("/enrollment/subject/" + subject.id()).contextPath("/enrollment"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(objectMapper.writeValueAsString(subject)));

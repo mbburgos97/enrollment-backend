@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Getter
 public class SubjectEntity {
     @Id
-    private Long subjectId;
+    private Long id;
     private String teacherId;
     private String title;
     @Builder.Default

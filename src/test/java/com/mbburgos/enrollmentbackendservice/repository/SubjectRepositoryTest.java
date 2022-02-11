@@ -30,7 +30,7 @@ public class SubjectRepositoryTest {
 
         subjectRepository.save(entity);
 
-        var retrieveEntity = subjectRepository.findById(entity.getSubjectId()).get();
+        var retrieveEntity = subjectRepository.findById(entity.getId()).get();
 
         assertThat(retrieveEntity).usingRecursiveComparison().isEqualTo(entity);
     }
@@ -47,7 +47,7 @@ public class SubjectRepositoryTest {
 
         retrieveEntities.forEach(retrieveEntity -> assertThat(retrieveEntity).usingRecursiveComparison()
                 .isEqualTo(entities.stream()
-                        .filter(entity -> entity.getSubjectId().equals(retrieveEntity.getSubjectId()))
+                        .filter(entity -> entity.getId().equals(retrieveEntity.getId()))
                         .findFirst().get()));
     }
 }

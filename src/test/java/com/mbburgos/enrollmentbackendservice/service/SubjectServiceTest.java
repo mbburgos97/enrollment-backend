@@ -30,7 +30,7 @@ public class SubjectServiceTest {
 
         when(subjectRepository.findById(any())).thenReturn(Optional.of(subjectEntity));
 
-        var subject = subjectService.retrieveSubject(subjectEntity.getSubjectId());
+        var subject = subjectService.retrieveSubject(subjectEntity.getId());
 
         assertThat(subject).usingRecursiveComparison().isEqualTo(subjectEntity);
     }
@@ -47,7 +47,7 @@ public class SubjectServiceTest {
 
         subjects.forEach(subject -> assertThat(subject).usingRecursiveComparison()
                 .isEqualTo(subjectEntities.stream()
-                        .filter(entity -> entity.getSubjectId().equals(subject.subjectId()))
+                        .filter(entity -> entity.getId().equals(subject.id()))
                         .findFirst().get()));
     }
 }

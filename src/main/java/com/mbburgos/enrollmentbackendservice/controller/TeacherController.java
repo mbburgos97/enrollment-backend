@@ -1,8 +1,6 @@
 package com.mbburgos.enrollmentbackendservice.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mbburgos.enrollmentbackendservice.model.Student;
 import com.mbburgos.enrollmentbackendservice.model.Teacher;
 import com.mbburgos.enrollmentbackendservice.service.TeacherService;
 import org.springframework.http.MediaType;
@@ -25,12 +23,12 @@ public record TeacherController(TeacherService teacherService, ObjectMapper mapp
     }
 
     @PostMapping("/teacher")
-    public Teacher createStudent(@RequestBody Map<String, Object> parameters) throws JsonProcessingException {
-        return teacherService.createTeacher(mapper.readValue(mapper.writeValueAsString(parameters), Teacher.class));
+    public Teacher createStudent(@RequestBody Map<String, Object> parameters) {
+        return teacherService.createTeacher(mapper.convertValue(parameters, Teacher.class));
     }
 
     @PatchMapping(value = "/teacher/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Teacher patchTeacher(@PathVariable("id") String id, @RequestBody Map<String, Object> parameters) throws JsonProcessingException {
-        return teacherService.patchTeacher(id, mapper.readValue(mapper.writeValueAsString(parameters), Teacher.class));
+    public Teacher patchTeacher(@PathVariable("id") String id, @RequestBody Map<String, Object> parameters) {
+        return teacherService.patchTeacher(id, mapper.convertValue(parameters, Teacher.class));
     }
 }

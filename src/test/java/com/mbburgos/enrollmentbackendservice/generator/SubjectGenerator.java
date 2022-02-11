@@ -11,7 +11,7 @@ import static com.tyro.oss.randomdata.RandomString.randomAlphabeticString;
 public abstract class SubjectGenerator {
     public static SubjectEntity generateSubjectEntity() {
         return SubjectEntity.builder()
-                .subjectId(randomLong())
+                .id(randomLong())
                 .teacherId(randomAlphabeticString())
                 .title(randomAlphabeticString())
                 .createdAt(LocalDateTime.now())
