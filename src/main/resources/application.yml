@@ -4,6 +4,8 @@ server:
     context-path: /enrollment
 
 spring:
+  liquibase:
+    drop-first: true
   datasource:
     url: jdbc:postgresql://localhost:5432/enrollment
     username: enrollment_user

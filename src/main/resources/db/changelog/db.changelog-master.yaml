@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: initial_tables
+      author: Joshua Burgos
+
+  - include:
+      file: sql/initial_table.sql
+      relativeToChangelogFile: true
+
+  - include:
+      file: sql/add_details_to_student_and_teacher.sql
+      relativeToChangelogFile: true
+
+  - include:
+      file: sql/add_details_to_subject.sql
+      relativeToChangelogFile: true
+
+  - include:
+      file: sql/initial_data.sql
+      relativeToChangelogFile: true
