@@ -1,7 +1,6 @@
 package com.mbburgos.enrollmentbackendservice.mapper;
 
 import com.mbburgos.enrollmentbackendservice.generator.AnnouncementGenerator;
-import com.mbburgos.enrollmentbackendservice.generator.StudentGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 

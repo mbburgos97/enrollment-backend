@@ -1,7 +1,6 @@
 package com.mbburgos.enrollmentbackendservice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mbburgos.enrollmentbackendservice.generator.StudentGenerator;
 import com.mbburgos.enrollmentbackendservice.generator.SubjectGenerator;
 import com.mbburgos.enrollmentbackendservice.service.SubjectService;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;

@@ -7,7 +7,7 @@ spring:
   liquibase:
     drop-first: true
   datasource:
-    url: jdbc:postgresql://localhost:5432/enrollment
+    url: jdbc:postgresql://database-2.carx3wwmsi6k.us-east-1.rds.amazonaws.com:5432/enrollment
     username: enrollment_user
     password: tempPass123
   jpa:
